@@ -1,13 +1,13 @@
 <template>
     <v-container>
-        <v-row>
-            <Chart :data="data" xlabel="ρ" ylabel="Queueing latency"></Chart>
+        <v-row class="chart">
+            <Chart :data="data" xlabel="ρ" ylabel="Queueing latency" name="latency"></Chart>
         </v-row>
-        <v-row>
+        <v-row class="control">
             <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
             <p>µ = {{mu}}</p>
         </v-row>
-        <v-row>
+        <v-row class="info">
             <v-col>
                 <v-row>
                     <a href="https://en.wikipedia.org/wiki/M/M/1_queue">The M/M/1 model</a>
@@ -18,7 +18,7 @@
             </v-col>
             <v-col>
                 <h3>Legend</h3>
-                <v-simple-table>
+                <v-table>
                     <tbody>
                         <tr>
                             <td>\( \mathbb E [W_q] \)</td>
@@ -41,7 +41,7 @@
                             <td>Service time mean</td>
                         </tr>
                     </tbody>
-                </v-simple-table>
+                </v-table>
             </v-col>            
         </v-row>
     </v-container>

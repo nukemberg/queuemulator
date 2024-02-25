@@ -1,30 +1,32 @@
 <template>
     <v-container>
-        <v-row>
+        <v-row class="chart">
         <Chart name="queue" ylabel="Queueing latency" xlabel="ρ" :data="data"></Chart>
         </v-row>
-        <v-row>
-            <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
-            <p>µ = {{mu}}</p>
-        </v-row>
-        <v-row>
-          <v-slider label="Workers" hint="workers" min="1" max="10" step="1" v-model="workers"></v-slider>
-          <p>Workers = {{workers}}</p>
-        </v-row>
-        <v-row>
+        <v-container class="control">
+            <v-row>
+                <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
+                <p>µ = {{mu}}</p>
+            </v-row>
+            <v-row>
+              <v-slider label="Workers" hint="workers" min="1" max="10" step="1" v-model="workers"></v-slider>
+              <p>Workers = {{workers}}</p>
+            </v-row>
+        </v-container>
+        <v-row class="info">
             <a href="https://en.wikipedia.org/wiki/M/M/c_queue">MMC model</a>
         </v-row>
-        <v-row>
+        <v-row class="info">
             <p>\[ \mathbb E [W_q] = \frac { \text{C} (c, \lambda / \mu) } {c \mu - \lambda} \]</p>
         </v-row>
-        <v-row>
+        <v-row class="info">
             <v-col>
                 <p><a href="https://en.wikipedia.org/wiki/Erlang_(unit)#Erlang_C_formula">The Erlang C function</a></p>
                 <p>\[ {\displaystyle {\text{ C}}(c,\lambda /\mu )={\frac {1}{1+\left(1-\rho \right)\left({\frac {c!}{(c\rho )^{c}}}\right)\sum _{k=0}^{c-1}{\frac {(c\rho )^{k}}{k!}}}}} \]</p>
             </v-col>
             <v-col>
                 <h3>Legend</h3>
-                <v-simple-table>
+                <v-table>
                     <tbody>
                         <tr>
                             <td>\( \mathbb E [W_q] \)</td>
@@ -47,7 +49,7 @@
                             <td>Number of service centers (workers)</td>
                         </tr>
                     </tbody>
-                </v-simple-table>
+                </v-table>
             </v-col>
 
         </v-row>

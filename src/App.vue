@@ -7,16 +7,9 @@
     >
       <v-toolbar-title dense>QueueMulator</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-container>
-        <v-row class="d-flex">
-          <v-col colls="2" sm="1">
-            <v-subheader>Model</v-subheader>
-          </v-col>
-          <v-col colls="6" sm="2">
-            <v-select dense single-line :items="formulas" label="Models" v-model="formula"></v-select>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-list-item>Model</v-list-item>
+      <v-select class="model" density="compact" single-line="true" :items="formulas" label="Model" v-model="formula"></v-select>
+      <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
@@ -26,6 +19,20 @@
     </v-main>
   </v-app>
 </template>
+
+<style>
+main {
+  width: 80%;
+  margin: auto;
+}
+.control, .info {
+  width: 90vh;
+  margin: auto;
+}
+.model {
+  margin-top: 25px;
+}
+</style>
 
 <script>
 import Kingman from './components/Kingman.vue'

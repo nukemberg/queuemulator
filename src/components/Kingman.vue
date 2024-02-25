@@ -3,21 +3,23 @@
         <v-row>
         <Chart name="queue" ylabel="Queueing latency" xlabel="ρ" :data="data"></Chart>
         </v-row>
-        <v-row>
-            <v-col>
-                <v-slider label="\( c_s \)" hint="Service rate variation" min="0.1" max="5" step="0.1" v-model="c_s"></v-slider>
-                <p>= {{c_s}}</p>
-            </v-col>
-            <v-col>
-                <v-slider label="\( c_a \)" hint="Arrival rate variation" min="0.1" max="5" step="0.1" v-model="c_a"></v-slider>
-                <p>= {{c_a}}</p>
-            </v-col>
-        </v-row>
-        <v-row>
-          <v-slider label="\( \mu \)" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
-          <p v-text="muFormula"></p>
-        </v-row>
-        <v-row>
+        <v-container class="control">
+            <v-row>
+                <v-col>
+                    <v-slider label="\( c_s \)" hint="Service rate variation" min="0.1" max="5" step="0.1" v-model="c_s"></v-slider>
+                    <p>= {{c_s}}</p>
+                </v-col>
+                <v-col>
+                    <v-slider label="\( c_a \)" hint="Arrival rate variation" min="0.1" max="5" step="0.1" v-model="c_a"></v-slider>
+                    <p>= {{c_a}}</p>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-slider label="\( \mu \)" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
+                <p v-text="muFormula"></p>
+            </v-row>
+        </v-container>
+        <v-row class="info">
             <v-col>
                 <v-row>
                     <p><a href="https://en.wikipedia.org/wiki/Kingman%27s_formula">Kingman's formula</a></p>
@@ -28,7 +30,7 @@
             </v-col>
             <v-col>
                 <h3>Legend</h3>
-                <v-simple-table>
+                <v-table>
                     <tbody>
                         <tr>
                             <td>\( \mathbb E [W_q] \)</td>
@@ -59,7 +61,7 @@
                             <td>Arrival rate coefficient of varation (standard deviation / mean)</td>
                         </tr>
                     </tbody>
-                </v-simple-table>
+                </v-table>
             </v-col>
         </v-row>
 

@@ -1,18 +1,36 @@
 <template>
-    <div :id="id"></div>
+    <div class="chart">
+        <canvas :id="id" ref="canvas"></canvas>
+    </div>
 </template>
 
+<style scoped>
+canvas {    
+    margin: auto;
+    height: 100% !important;
+    width: 100% !important;
+}
+div.chart {
+    display: inline-block;
+    position: relative;
+    width: 100vh;
+    height: 70vh;
+    min-height: 100px;
+    min-width: 800px;
+    margin: auto;
+}
+</style>
 <script>
-import c3 from 'c3'
+// import c3 from 'c3'
+import {CategoryScale, Chart, Colors, Legend, LineController, LineElement, LinearScale, PointElement} from 'chart.js'
 import _ from 'lodash'
 
+Chart.register(CategoryScale, LineController, LinearScale, PointElement, LineElement, Colors, Legend);
+
 function dataToGraph(data) {
-    return _.reduce(data, (d, {name, x, y}) => {
-        d.columns.push([name, ...y])
-        d.columns.push(['x_' + name, ...x])
-        d.xs[name] = 'x_' + name
-        return d
-    }, {columns: [], xs: {}, type: 'line'})
+    return _.map(data, ({name, x, y}) => {
+        return {label: name, data: _.zip(x, y).map(([x, y]) => ({x, y}))}
+    });
 }
 
 export default {
@@ -21,37 +39,53 @@ export default {
         id() {
             return `chart-${this.name}`
         },
-        graphData: (vm) => {
+        datasets: (vm) => {
             return dataToGraph(vm.data)
         }
     },
     mounted() {
-        this._chart = c3.generate({
-            bindto: '#' + this.id,
-            data: this.graphData,
-            point: {
-                show: false
+        this._chart = new Chart(this.$refs.canvas.getContext('2d'),
+        {
+            type: 'line',
+            data: {
+                datasets: this.datasets
             },
-            axis: {
-                x: {
-                    label: this.xlabel,
-                    max: 1,
-                    tick: {
-                        values: _.range(0, 1, 0.1),
-                        format: x => x.toPrecision(2)
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true
                     }
                 },
-                y: {
-                    label: this.ylabel,
-                    max: 100
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            text: this.xlabel
+                        },
+                        min: 0,
+                        max: 1,
+                        ticks: {
+                            callback: x => `${x.toPrecision(2)}`,
+                            count: 10
+                        }
+                    },
+                    y: {
+                        title: {
+                            text: this.ylabel
+                        },
+                        max: 100
+                    }
                 }
             }
-        })
+        });
     },
     watch: {
         data(_data) {
             if (!_.isEmpty(_data)) {
-                this._chart.load(dataToGraph(_data))
+                this._chart.data.datasets = dataToGraph(_data);
+                this._chart.update('none');
             }
         }
     }
