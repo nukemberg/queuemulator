@@ -4,8 +4,11 @@
             <Chart :data="data" xlabel="ρ" ylabel="Queueing latency" name="latency"></Chart>
         </v-row>
         <v-row class="control">
-            <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
-            <p>µ = {{mu}}</p>
+            <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu">
+                <template v-slot:append>
+                    <span>{{mu.toFixed(1)}}</span>
+                </template>
+            </v-slider>
         </v-row>
         <v-row class="info">
             <v-col>

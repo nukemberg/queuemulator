@@ -5,12 +5,18 @@
         </v-row>
         <v-container class="control">
             <v-row>
-                <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu"></v-slider>
-                <p>µ = {{mu}}</p>
+                <v-slider label="µ" hint="Service rate" min="1" max="10" step="0.25" v-model="mu">
+                    <template v-slot:append>
+                        <span>{{mu.toFixed(1)}}</span>
+                    </template>
+                </v-slider>
             </v-row>
             <v-row>
-              <v-slider label="Workers" hint="workers" min="1" max="10" step="1" v-model="workers"></v-slider>
-              <p>Workers = {{workers}}</p>
+              <v-slider label="Workers" hint="workers" min="1" max="10" step="1" v-model="workers">
+                <template v-slot:append>
+                    <span>{{ workers }}</span>
+                </template>
+              </v-slider>
             </v-row>
         </v-container>
         <v-row class="info">
